@@ -27,8 +27,6 @@ const layoutOptions = [
 
 <template>
   <div class="panel">
-    <h2 class="heading">Read Data</h2>
-    
     <div class="grid-controls">
       <div class="input-group">
         <label>Function Code</label>

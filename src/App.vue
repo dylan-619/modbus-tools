@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useConnectionStore } from './stores/connection'
 import ConnectionPanel from './components/ConnectionPanel.vue'
 import ReadValuePanel from './components/ReadValuePanel.vue'
@@ -6,6 +7,7 @@ import WriteValuePanel from './components/WriteValuePanel.vue'
 import LogsPanel from './components/LogsPanel.vue'
 
 const connectionStore = useConnectionStore()
+const activeTab = ref<'read' | 'write'>('read')
 </script>
 
 <template>
@@ -19,9 +21,26 @@ const connectionStore = useConnectionStore()
     
     <main class="main-content">
       <div v-if="connectionStore.status === 'Connected'" class="workspace">
-        <div class="panels-row">
-          <ReadValuePanel class="flex-1" />
-          <WriteValuePanel class="flex-1" />
+        <div class="workspace-tabs">
+          <button 
+            class="tab-btn" 
+            :class="{ active: activeTab === 'read' }" 
+            @click="activeTab = 'read'"
+          >
+            Read Data
+          </button>
+          <button 
+            class="tab-btn" 
+            :class="{ active: activeTab === 'write' }" 
+            @click="activeTab = 'write'"
+          >
+            Write Data
+          </button>
+        </div>
+        
+        <div class="active-panel">
+          <ReadValuePanel v-if="activeTab === 'read'" class="flex-1" />
+          <WriteValuePanel v-if="activeTab === 'write'" class="flex-1" />
         </div>
         <LogsPanel />
       </div>
@@ -78,10 +97,36 @@ const connectionStore = useConnectionStore()
   overflow: hidden;
 }
 
-.panels-row {
+.workspace-tabs {
   display: flex;
-  gap: 12px;
-  align-items: stretch;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border);
+  gap: 2px;
+}
+
+.tab-btn {
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+}
+
+.active-panel {
+  display: flex;
+  flex: 0 0 auto;
 }
 
 .flex-1 {

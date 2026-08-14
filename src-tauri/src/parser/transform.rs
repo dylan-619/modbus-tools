@@ -22,7 +22,9 @@ pub fn apply_transform(value: &ParsedValue, transform: &ValueTransform) -> (Opti
             if transformed != 0.0 && (transformed.abs() < 0.0001 || transformed.abs() >= 1000000.0) {
                 format!("{:e}", transformed)
             } else {
-                format!("{}", transformed)
+                let s = format!("{:.6}", transformed);
+                let trimmed = s.trim_end_matches('0').trim_end_matches('.');
+                if trimmed.is_empty() { "0".to_string() } else { trimmed.to_string() }
             }
         };
 

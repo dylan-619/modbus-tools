@@ -21,8 +21,6 @@ const valueInput = computed({
 
 <template>
   <div class="panel">
-    <h2 class="heading">Write Data</h2>
-    
     <div class="grid-controls">
       <div class="input-group">
         <label>Function Code</label>
