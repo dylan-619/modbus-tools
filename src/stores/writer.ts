@@ -4,10 +4,13 @@ import { invoke } from '@tauri-apps/api/core'
 import type { WriteRequest, WriteResult } from '../types/modbus'
 import { useConnectionStore } from './connection'
 import { useLogsStore } from './logs'
+import { parseModbusAddress, type AddressMode } from '../utils/address'
 
 export const useWriterStore = defineStore('writer', () => {
   const connectionStore = useConnectionStore()
   const logsStore = useLogsStore()
+  
+  const addressMode = ref<AddressMode>('Protocol')
   
   const request = ref<Omit<WriteRequest, 'connection_id'>>({
     function: 6,
@@ -23,9 +26,13 @@ export const useWriterStore = defineStore('writer', () => {
     
     isWriting.value = true
     try {
+      const parsedAddress = parseModbusAddress(request.value.address, addressMode.value, request.value.function)
+
       const fullRequest: WriteRequest = {
-        ...request.value,
-        connection_id: connectionStore.connectionId
+        connection_id: connectionStore.connectionId,
+        function: request.value.function,
+        address: parsedAddress,
+        values: request.value.values
       }
       
       const res = await invoke<WriteResult>('write_value', { request: fullRequest })
@@ -77,6 +84,7 @@ export const useWriterStore = defineStore('writer', () => {
 
   return {
     request,
+    addressMode,
     lastResult,
     isWriting,
     writeOnce

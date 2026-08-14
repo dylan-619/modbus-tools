@@ -55,10 +55,16 @@ impl RtuWorker {
                 cmd = self.rx.recv() => {
                     match cmd {
                         Some(WorkerCommand::Read { request, response_tx }) => {
-                            let pdu = crate::protocol::pdu::ModbusRequest::ReadHoldingRegisters { // Simplified for now
-                                address: request.address,
-                                quantity: 1, // Calculate properly later
-                            }.encode();
+                            let pdu = match request.function {
+                                1 => crate::protocol::pdu::ModbusRequest::ReadCoils { address: request.address, quantity: request.data_type.register_count() }.encode(),
+                                2 => crate::protocol::pdu::ModbusRequest::ReadDiscreteInputs { address: request.address, quantity: request.data_type.register_count() }.encode(),
+                                3 => crate::protocol::pdu::ModbusRequest::ReadHoldingRegisters { address: request.address, quantity: request.data_type.register_count() }.encode(),
+                                4 => crate::protocol::pdu::ModbusRequest::ReadInputRegisters { address: request.address, quantity: request.data_type.register_count() }.encode(),
+                                _ => {
+                                    let _ = response_tx.send(Err(ModbusToolError::UnsupportedFunctionCode(request.function)));
+                                    continue;
+                                }
+                            };
                             
                             let frame = encode_rtu_request(self.config.slave_id, &pdu);
                             let start_time = chrono::Utc::now();
@@ -164,16 +170,22 @@ impl RtuWorker {
                         }
                         Some(WorkerCommand::Write { request, response_tx }) => {
                             let pdu = match request.function {
-                                crate::models::WriteFunction::WriteSingleCoil => crate::protocol::pdu::ModbusRequest::WriteSingleCoil { address: request.address, value: request.values[0] != 0 }.encode(),
-                                crate::models::WriteFunction::WriteSingleRegister => crate::protocol::pdu::ModbusRequest::WriteSingleRegister { address: request.address, value: request.values[0] }.encode(),
-                                crate::models::WriteFunction::WriteMultipleCoils => {
+                                5 => crate::protocol::pdu::ModbusRequest::WriteSingleCoil { address: request.address, value: request.values[0] != 0 }.encode(),
+                                6 => crate::protocol::pdu::ModbusRequest::WriteSingleRegister { address: request.address, value: request.values[0] }.encode(),
+                                15 => {
                                     let mut packed = vec![0u8; (request.values.len() + 7) / 8];
                                     for (i, v) in request.values.iter().enumerate() {
-                                        if *v != 0 { packed[i / 8] |= 1 << (i % 8); }
+                                        if *v != 0 {
+                                            packed[i / 8] |= 1 << (i % 8);
+                                        }
                                     }
                                     crate::protocol::pdu::ModbusRequest::WriteMultipleCoils { address: request.address, quantity: request.values.len() as u16, values: packed }.encode()
                                 },
-                                crate::models::WriteFunction::WriteMultipleRegisters => crate::protocol::pdu::ModbusRequest::WriteMultipleRegisters { address: request.address, quantity: request.values.len() as u16, values: request.values.clone() }.encode(),
+                                16 => crate::protocol::pdu::ModbusRequest::WriteMultipleRegisters { address: request.address, quantity: request.values.len() as u16, values: request.values.clone() }.encode(),
+                                _ => {
+                                    let _ = response_tx.send(Err(ModbusToolError::UnsupportedFunctionCode(request.function)));
+                                    continue;
+                                }
                             };
                             
                             let frame = encode_rtu_request(self.config.slave_id, &pdu);

@@ -45,6 +45,19 @@ pub enum DataType {
     Raw { registers: u16 },
 }
 
+impl DataType {
+    pub fn register_count(&self) -> u16 {
+        match self {
+            DataType::Bool => 1,
+            DataType::UInt16 | DataType::Int16 => 1,
+            DataType::UInt32 | DataType::Int32 | DataType::Float32 => 2,
+            DataType::UInt64 | DataType::Int64 | DataType::Float64 => 4,
+            DataType::Ascii { registers } => *registers,
+            DataType::Raw { registers } => *registers,
+        }
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub enum ByteLayout {
     Ab,
@@ -78,7 +91,7 @@ pub enum ReadFunction {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReadRequest {
     pub connection_id: String,
-    pub function: ReadFunction,
+    pub function: u8,
     pub address: u16,
     pub data_type: DataType,
     pub layout: ByteLayout,
@@ -124,7 +137,7 @@ pub enum WriteFunction {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WriteRequest {
     pub connection_id: String,
-    pub function: WriteFunction,
+    pub function: u8,
     pub address: u16,
     pub values: Vec<u16>, // Represent coils as 0xFF00 / 0x0000 or 1/0 for single coil, packed bits for multiple coils, or u16 for registers
 }

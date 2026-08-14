@@ -40,8 +40,14 @@ const layoutOptions = [
       </div>
       
       <div class="input-group">
-        <label>Address</label>
-        <input type="number" v-model.number="store.request.address" class="input" min="0" max="65535" />
+        <label>
+          Address
+          <label class="checkbox-label" style="float: right; font-size: 0.8rem; font-weight: normal; cursor: pointer;">
+            <input type="checkbox" :checked="store.addressMode === 'PLC'" @change="e => store.addressMode = (e.target as HTMLInputElement).checked ? 'PLC' : 'Protocol'" />
+            PLC Mode (e.g. 40063)
+          </label>
+        </label>
+        <input type="text" v-model="store.request.address" class="input" placeholder="e.g. 62 or 40063" />
       </div>
 
       <div class="input-group">
@@ -84,7 +90,7 @@ const layoutOptions = [
     <div v-if="store.lastResult" class="result-display">
       <div class="value">
         <span class="label">Result:</span>
-        <span class="data">{{ store.lastResult.display_value }}</span>
+        <span class="data word-break">{{ store.lastResult.display_value }}</span>
       </div>
       <div class="meta">
         <span class="time">{{ new Date(store.lastResult.timestamp_ms).toLocaleTimeString() }}</span>
@@ -113,6 +119,21 @@ const layoutOptions = [
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--border);
+}
+
+.word-break {
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text-secondary);
+}
+.checkbox-label:hover {
+  color: var(--text-primary);
 }
 
 .polling-controls {

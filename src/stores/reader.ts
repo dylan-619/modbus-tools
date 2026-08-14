@@ -3,12 +3,14 @@ import { ref } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
 import type { ReadRequest, ReadResult } from '../types/modbus'
 import { useConnectionStore } from './connection'
-
 import { useLogsStore } from './logs'
+import { parseModbusAddress, type AddressMode } from '../utils/address'
 
 export const useReaderStore = defineStore('reader', () => {
   const connectionStore = useConnectionStore()
   const logsStore = useLogsStore()
+  
+  const addressMode = ref<AddressMode>('Protocol')
   
   const request = ref<Omit<ReadRequest, 'connection_id'>>({
     function: 3,
@@ -27,8 +29,11 @@ export const useReaderStore = defineStore('reader', () => {
     if (!connectionStore.connectionId) return
     
     try {
+      const parsedAddress = parseModbusAddress(request.value.address, addressMode.value, request.value.function)
+      
       const fullRequest: ReadRequest = {
         ...request.value,
+        address: parsedAddress,
         connection_id: connectionStore.connectionId
       }
       
@@ -101,11 +106,13 @@ export const useReaderStore = defineStore('reader', () => {
 
   return {
     request,
+    addressMode,
     lastResult,
     isPolling,
     pollingIntervalMs,
     readOnce,
     togglePolling,
+    startPolling,
     stopPolling
   }
 })

@@ -19,7 +19,7 @@ pub fn apply_transform(value: &ParsedValue, transform: &ValueTransform) -> (Opti
         let mut display = if let Some(decimals) = transform.decimals {
             format!("{:.*}", decimals as usize, transformed)
         } else {
-            format!("{}", transformed)
+            format!("{:g}", transformed)
         };
 
         if let Some(unit) = &transform.unit {
