@@ -38,11 +38,11 @@ const layoutOptions = [
       </div>
       
       <div class="input-group">
-        <label>
-          Address
-          <label class="checkbox-label" style="float: right; font-size: 0.8rem; font-weight: normal; cursor: pointer;">
+        <label class="label-row">
+          <span>Address</span>
+          <label class="checkbox-label" style="font-size: 11px; font-weight: normal; cursor: pointer;">
             <input type="checkbox" :checked="store.addressMode === 'PLC'" @change="e => store.addressMode = (e.target as HTMLInputElement).checked ? 'PLC' : 'Protocol'" />
-            PLC Mode (e.g. 40063)
+            PLC Mode
           </label>
         </label>
         <input type="text" v-model="store.request.address" class="input" placeholder="e.g. 62 or 40063" />
@@ -106,16 +106,16 @@ const layoutOptions = [
 .grid-controls {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 4px 8px;
+  margin-bottom: 8px;
 }
 
 .actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -199,5 +199,12 @@ const layoutOptions = [
 
 .raw-frames strong {
   color: var(--text-primary);
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 </style>

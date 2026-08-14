@@ -95,7 +95,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  margin-bottom: 8px;
 }
 
 .input-group label {
