@@ -59,7 +59,8 @@ function formatHex(data: number[]) {
 .logs-panel {
   display: flex;
   flex-direction: column;
-  height: 400px;
+  flex: 1;
+  min-height: 200px;
   overflow: hidden;
 }
 
@@ -67,20 +68,20 @@ function formatHex(data: number[]) {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 8px;
 }
 
 .controls {
   display: flex;
-  gap: 1rem;
+  gap: 8px;
   align-items: center;
 }
 
 .checkbox {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-size: 0.875rem;
+  gap: 4px;
+  font-size: 12px;
   color: var(--text-secondary);
   cursor: pointer;
 }
@@ -100,7 +101,7 @@ function formatHex(data: number[]) {
 .logs-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.875rem;
+  font-size: 12px;
 }
 
 .logs-table th {
@@ -109,13 +110,13 @@ function formatHex(data: number[]) {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
   text-align: left;
-  padding: 0.5rem 1rem;
+  padding: 4px 8px;
   font-weight: 600;
   z-index: 10;
 }
 
 .logs-table td {
-  padding: 0.5rem 1rem;
+  padding: 4px 8px;
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
 }
@@ -130,9 +131,9 @@ function formatHex(data: number[]) {
 }
 
 .badge {
-  padding: 0.125rem 0.375rem;
+  padding: 2px 4px;
   border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  font-size: 11px;
   font-weight: 600;
 }
 

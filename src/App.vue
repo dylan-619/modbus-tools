@@ -40,7 +40,7 @@ const connectionStore = useConnectionStore()
 }
 
 .sidebar {
-  width: 320px;
+  width: 250px;
   background-color: var(--bg-secondary);
   border-right: 1px solid var(--border);
   display: flex;
@@ -48,12 +48,12 @@ const connectionStore = useConnectionStore()
 }
 
 .brand {
-  padding: 1.5rem;
+  padding: 12px;
   border-bottom: 1px solid var(--border);
 }
 
 .brand h1 {
-  font-size: 1.25rem;
+  font-size: 16px;
   font-weight: 700;
   color: var(--text-primary);
   background: linear-gradient(to right, var(--accent), #60a5fa);
@@ -64,22 +64,24 @@ const connectionStore = useConnectionStore()
 .main-content {
   flex: 1;
   background-color: var(--bg-primary);
-  overflow-y: auto;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 12px;
 }
 
 .workspace {
-  max-width: 1400px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 12px;
+  flex: 1;
+  overflow: hidden;
 }
 
 .panels-row {
   display: flex;
-  gap: 2rem;
-  align-items: flex-start;
+  gap: 12px;
+  align-items: stretch;
 }
 
 .flex-1 {

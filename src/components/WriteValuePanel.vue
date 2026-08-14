@@ -76,16 +76,16 @@ const valueInput = computed({
 <style scoped>
 .grid-controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .actions {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -102,21 +102,21 @@ const valueInput = computed({
 .result-display {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 12px;
   border: 1px solid var(--border);
 }
 
 .value {
-  font-size: 1.5rem;
+  font-size: 16px;
   font-weight: 700;
   display: flex;
   align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .value .label {
-  font-size: 1rem;
+  font-size: 13px;
   color: var(--text-secondary);
   font-weight: 500;
 }
@@ -140,8 +140,9 @@ const valueInput = computed({
 
 .meta {
   display: flex;
-  gap: 1rem;
+  gap: 8px;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 11px;
+  margin-bottom: 8px;
 }
 </style>

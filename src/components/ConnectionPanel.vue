@@ -99,10 +99,10 @@ onMounted(() => {
 
 <style scoped>
 .connection-panel {
-  padding: 1.5rem;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 12px;
 }
 
 .tabs {
@@ -114,7 +114,7 @@ onMounted(() => {
 
 .tab {
   flex: 1;
-  padding: 0.5rem;
+  padding: 4px 8px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
@@ -122,6 +122,7 @@ onMounted(() => {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.2s;
+  font-size: 13px;
 }
 
 .tab.active {
@@ -142,14 +143,14 @@ onMounted(() => {
 
 .connect-btn {
   width: 100%;
-  padding: 0.75rem;
-  font-size: 1rem;
+  padding: 6px;
+  font-size: 13px;
 }
 
 .error-msg {
   color: var(--error);
-  font-size: 0.875rem;
-  padding: 0.75rem;
+  font-size: 12px;
+  padding: 8px;
   background-color: rgba(239, 68, 68, 0.1);
   border-radius: var(--radius-md);
   border: 1px solid rgba(239, 68, 68, 0.2);

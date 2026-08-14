@@ -107,17 +107,17 @@ const layoutOptions = [
 <style scoped>
 .grid-controls {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
   border-bottom: 1px solid var(--border);
 }
 
@@ -139,7 +139,7 @@ const layoutOptions = [
 .polling-controls {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 8px;
 }
 
 .inline {
@@ -156,21 +156,21 @@ const layoutOptions = [
 .result-display {
   background-color: var(--bg-primary);
   border-radius: var(--radius-md);
-  padding: 1.5rem;
+  padding: 12px;
   border: 1px solid var(--border);
 }
 
 .value {
-  font-size: 2rem;
+  font-size: 16px;
   font-weight: 700;
   display: flex;
   align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
 .value .label {
-  font-size: 1rem;
+  font-size: 13px;
   color: var(--text-secondary);
   font-weight: 500;
 }
@@ -181,22 +181,22 @@ const layoutOptions = [
 
 .meta {
   display: flex;
-  gap: 1rem;
+  gap: 8px;
   color: var(--text-secondary);
-  font-size: 0.875rem;
-  margin-bottom: 1rem;
+  font-size: 11px;
+  margin-bottom: 8px;
 }
 
 .raw-frames {
   font-family: monospace;
-  font-size: 0.875rem;
+  font-size: 11px;
   color: var(--text-secondary);
   background-color: rgba(0,0,0,0.2);
-  padding: 1rem;
+  padding: 8px;
   border-radius: var(--radius-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 4px;
 }
 
 .raw-frames strong {
